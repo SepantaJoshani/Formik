@@ -40,7 +40,13 @@ function YoutubeForm() {
         <div className="form-control">
           <label htmlFor="email">E-mail</label>
           <Field type="email" id="email" name="email" />
-          <ErrorMessage name="email" />
+          <ErrorMessage name="email">
+            {
+              (errorMsg)=>{
+                return <div className="error">{errorMsg}</div>
+              }
+            }
+          </ErrorMessage>
         </div>
 
         <div className="form-control">
