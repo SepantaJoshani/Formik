@@ -1,6 +1,8 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import ErrorComp from "./ErrorMessage";
+
 
 const initialValues = {
   name: "",
@@ -18,6 +20,7 @@ const validationSchema = Yup.object({
   name: Yup.string().required("Required !"),
   email: Yup.string().email("Invalid Format").required("Required !"),
   channel: Yup.string().required("Required !"),
+  address:Yup.string().required("Required !")
 });
 
 function YoutubeForm() {
@@ -31,7 +34,7 @@ function YoutubeForm() {
         <div className="form-control">
           <label htmlFor="name">Name</label>
           <Field type="text" id="name" name="name" />
-          <ErrorMessage name="name" />
+          <ErrorMessage name="name" component={ErrorComp} />
         </div>
 
         <div className="form-control">
