@@ -10,19 +10,18 @@ const initialValues = {
 
 const onSubmit = (values) => console.log(values);
 
-const ValidationSchema = Yup.object({
-  name:Yup.string().required('Required !'),
-  email:Yup.string().email('Invalid Email Format').required('Required !'),
-  channel:Yup.string().required('Required !')
+const validationSchema = Yup.object({
+  name: Yup.string().required("Required !"),
+  email: Yup.string().email("Invalid Email Format").required("Required !"),
+  channel: Yup.string().required("Required !"),
+});
 
 function OldForm() {
   const formik = useFormik({
     initialValues,
     onSubmit,
-    
+    validationSchema,
   });
-
-  
 
   return (
     <div>
@@ -33,9 +32,11 @@ function OldForm() {
             type="text"
             id="name"
             name="name"
-            onChange={formik.handleChange}
-            value={formik.values.name}
+            {...formik.getFieldProps("name")}
           />
+          {formik.touched.name && formik.errors.name && (
+            <p className="error">{formik.errors.name}</p>
+          )}
         </div>
 
         <div className="form-control">
@@ -44,9 +45,11 @@ function OldForm() {
             type="email"
             id="email"
             name="email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
+            {...formik.getFieldProps("email")}
           />
+          {formik.touched.email && formik.errors.email && (
+            <p className="error">{formik.errors.email}</p>
+          )}
         </div>
 
         <div className="form-control">
@@ -55,9 +58,11 @@ function OldForm() {
             type="text"
             id="channel"
             name="channel"
-            onChange={formik.handleChange}
-            value={formik.values.channel}
+            {...formik.getFieldProps("channel")}
           />
+          {formik.touched.channel && formik.errors.channel && (
+            <p className="error">{formik.errors.channel}</p>
+          )}
         </div>
 
         <button
