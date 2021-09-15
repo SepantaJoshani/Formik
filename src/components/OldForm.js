@@ -7,13 +7,15 @@ function OldForm() {
       name: "",
       email: "",
       channel: "",
-    },
+    },onSubmit : values=>{
+      console.log(values);
+    }
   });
 
-  console.log(formik.values);
+  
   return (
     <div>
-      <form>
+      <form onSubmit={formik.handleSubmit}>
         <div className="form-control">
           <label htmlFor="name">Name</label>
           <input
