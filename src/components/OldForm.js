@@ -1,18 +1,29 @@
 import React from "react";
 import { useFormik } from "formik";
+import * as Yup from "yup";
+
+const initialValues = {
+  name: "",
+  email: "",
+  channel: "",
+};
+
+const onSubmit = (values) => console.log(values);
+
+const ValidationSchema = Yup.object({
+  name:Yup.string().required('Required !'),
+  email:Yup.string().email('Invalid Email Format').required('Required !'),
+  channel:Yup.string().required('Required !')
 
 function OldForm() {
   const formik = useFormik({
-    initialValues: {
-      name: "",
-      email: "",
-      channel: "",
-    },onSubmit : values=>{
-      console.log(values);
-    }
+    initialValues,
+    onSubmit,
+    
   });
 
   
+
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
@@ -45,7 +56,7 @@ function OldForm() {
             id="channel"
             name="channel"
             onChange={formik.handleChange}
-            value={formik.values.channel}  
+            value={formik.values.channel}
           />
         </div>
 
