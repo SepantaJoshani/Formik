@@ -19,11 +19,19 @@ const initialValues = {
 const onSubmit = (values) => console.log(values);
 
 const validationSchema = Yup.object({
-  name: Yup.string().required("Required !"),
+  name: Yup.string().required("Required !"  ),
   email: Yup.string().email("Invalid Email Format").required("Required !"),
   channel: Yup.string().required("Required !"),
   address: Yup.string().required("Required !"),
 });
+
+const commentValidate = value => {
+let error = {}
+if(!value){
+  error='Required'
+}
+return error
+}
 
 function OldForm() {
   return (
@@ -55,7 +63,9 @@ function OldForm() {
         </div>
         <div className="form-control">
           <label htmlFor="comments">Comments</label>
-          <Field as="textarea" id="comments" name="comments" />
+          <Field as="textarea" id="comments" name="comments" validate ={commentValidate} />
+        
+        <ErrorMessage name="comments" component={ErrorTxt} />
         </div>
         <div className="form-control">
           <label htmlFor="address">Address</label>
