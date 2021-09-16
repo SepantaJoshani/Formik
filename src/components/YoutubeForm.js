@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import ErrorComp from "./ErrorMessage";
+import ErrorTxt from "./ErrorTxt";
 
 
 const initialValues = {
@@ -34,7 +34,7 @@ function YoutubeForm() {
         <div className="form-control">
           <label htmlFor="name">Name</label>
           <Field type="text" id="name" name="name" />
-          <ErrorMessage name="name" component={ErrorComp} />
+          <ErrorMessage name="name" component={ErrorTxt} />
         </div>
 
         <div className="form-control">
