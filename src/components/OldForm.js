@@ -39,103 +39,120 @@ function OldForm() {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      
     >
+     
+{
+  formik => {
+    console.log(formik);
+    return (
       <Form>
-        <div className="form-control">
-          <label htmlFor="name">Name</label>
-          <Field type="text" id="name" name="name" />
+      <div className="form-control">
+        <label htmlFor="name">Name</label>
+        <Field type="text" id="name" name="name" />
 
-          <ErrorMessage name="name" component={ErrorTxt} />
-        </div>
+        <ErrorMessage name="name" component={ErrorTxt} />
+      </div>
 
-        <div className="form-control">
-          <label htmlFor="email">E-mail</label>
-          <Field type="email" id="email" name="email" />
-          <ErrorMessage name="email">
-            {(errorMessage) => <p className="error">{errorMessage}</p>}
-          </ErrorMessage>
-        </div>
+      <div className="form-control">
+        <label htmlFor="email">E-mail</label>
+        <Field type="email" id="email" name="email" />
+        <ErrorMessage name="email">
+          {(errorMessage) => <p className="error">{errorMessage}</p>}
+        </ErrorMessage>
+      </div>
 
-        <div className="form-control">
-          <label htmlFor="channel">Channel</label>
-          <Field type="text" id="channel" name="channel" />
-          <ErrorMessage name="channel" />
-        </div>
-        <div className="form-control">
-          <label htmlFor="comments">Comments</label>
-          <Field as="textarea" id="comments" name="comments" validate ={commentValidate} />
-        
-        <ErrorMessage name="comments" component={ErrorTxt} />
-        </div>
-        <div className="form-control">
-          <label htmlFor="address">Address</label>
-          <Field name="address">
-            {(props) => {
-              const { field, meta, form } = props;
+      <div className="form-control">
+        <label htmlFor="channel">Channel</label>
+        <Field type="text" id="channel" name="channel" />
+        <ErrorMessage name="channel" component={ErrorTxt} />
+      </div>
+      <div className="form-control">
+        <label htmlFor="comments">Comments</label>
+        <Field as="textarea" id="comments" name="comments" validate ={commentValidate} />
+      
+      <ErrorMessage name="comments" component={ErrorTxt} />
+      </div>
+      <div className="form-control">
+        <label htmlFor="address">Address</label>
+        <Field name="address">
+          {(props) => {
+            const { field, meta, form } = props;
 
-              return (
-                <div>
-                  <input type="text" id="address" {...field} />
-                  {meta.touched && meta.error && (
-                    <p className="error">{meta.error}</p>
-                  )}
-                </div>
-              );
-            }}
-          </Field>
-        </div>
-        <div className="form-control">
-          <label htmlFor="facebook">Facebook Profile</label>
-          <Field type="text" id="facebook" name="social.facebook" />
-        </div>
-        <div className="form-control">
-          <label htmlFor="yahoo">yahoo Profile</label>
-          <Field type="text" id="yahoo" name="social.yahoo" />
-        </div>
-
-        <div className="form-control">
-          <label>List Of Numbers</label>
-          <FieldArray name="phoneNubmers">
-            {(fieldArrayProps) => {
-              console.log(fieldArrayProps);
-              const { form, push, remove } = fieldArrayProps;
-              const { values } = form;
-              const { phoneNubmers } = values;
-
-              return (
-                <div>
-                  {phoneNubmers.map((phoneNumber, index) => (
-                    <div key={index}>
-                      <Field name={`phoneNumbers[${index}]`} />
-                      {index > 0 && (
-                        <button type="button" onClick={() => remove(index)}>
-                          -
-                        </button>
-                      )}
-                      {index <= 5 && (
-                        <button type="button" onClick={() => push("")}>
-                          +
-                        </button>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              );
-            }}
-          </FieldArray>
-        </div>
-
-        <button
-          type="submit"
-          style={{
-            marginTop: "10px",
-            padding: "5px 20px",
-            borderRadius: "10px",
+            return (
+              <div>
+                <input type="text" id="address" {...field} />
+                {meta.touched && meta.error && (
+                  <p className="error">{meta.error}</p>
+                )}
+              </div>
+            );
           }}
-        >
-          Submit
-        </button>
-      </Form>
+        </Field>
+      </div>
+      <div className="form-control">
+        <label htmlFor="facebook">Facebook Profile</label>
+        <Field type="text" id="facebook" name="social.facebook" />
+      </div>
+      <div className="form-control">
+        <label htmlFor="yahoo">yahoo Profile</label>
+        <Field type="text" id="yahoo" name="social.yahoo" />
+      </div>
+
+      <div className="form-control">
+        <label>List Of Numbers</label>
+        <FieldArray name="phoneNubmers">
+          {(fieldArrayProps) => {
+            console.log(fieldArrayProps);
+            const { form, push, remove } = fieldArrayProps;
+            const { values } = form;
+            const { phoneNubmers } = values;
+
+            return (
+              <div>
+                {phoneNubmers.map((phoneNumber, index) => (
+                  <div key={index}>
+                    <Field name={`phoneNumbers[${index}]`} />
+                    {index > 0 && (
+                      <button type="button" onClick={() => remove(index)}>
+                        -
+                      </button>
+                    )}
+                    {index <= 5 && (
+                      <button type="button" onClick={() => push("")}>
+                        +
+                      </button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            );
+          }}
+        </FieldArray>
+      </div>
+          <button type="button" onClick={()=>{formik.setFieldTouched('comments')}}>Validate CM</button>
+          <button type="button" onClick={()=>{formik.setTouched({
+            name:true,
+            email:true,
+            channel:true,
+            comments:true
+
+          })}}>Validate All</button>
+      <button
+        type="submit"
+        style={{
+          marginTop: "10px",
+          padding: "5px 20px",
+          borderRadius: "10px",
+        }}
+      >
+        Submit
+      </button>
+    </Form>
+    )
+  }
+}  
+
     </Formik>
   );
 }
