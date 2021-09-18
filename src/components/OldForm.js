@@ -16,22 +16,18 @@ const initialValues = {
   phoneNubmers: [""],
 };
 
-const onSubmit = (values) => console.log(values);
+const onSubmit = (values,submitingprops) => {
+  submitingprops.setSubmitting(false)
+};
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Required !"  ),
   email: Yup.string().email("Invalid Email Format").required("Required !"),
   channel: Yup.string().required("Required !"),
-  address: Yup.string().required("Required !"),
+ 
 });
 
-const commentValidate = value => {
-let error = {}
-if(!value){
-  error='Required'
-}
-return error
-}
+
 
 function OldForm() {
   return (
@@ -39,6 +35,7 @@ function OldForm() {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      // validateOnMount
       
     >
      
@@ -69,8 +66,7 @@ function OldForm() {
       </div>
       <div className="form-control">
         <label htmlFor="comments">Comments</label>
-        <Field as="textarea" id="comments" name="comments" validate ={commentValidate} />
-      
+        <Field as="textarea" id="comments" name="comments" />
       <ErrorMessage name="comments" component={ErrorTxt} />
       </div>
       <div className="form-control">
@@ -130,14 +126,7 @@ function OldForm() {
           }}
         </FieldArray>
       </div>
-          <button type="button" onClick={()=>{formik.setFieldTouched('comments')}}>Validate CM</button>
-          <button type="button" onClick={()=>{formik.setTouched({
-            name:true,
-            email:true,
-            channel:true,
-            comments:true
-
-          })}}>Validate All</button>
+   
       <button
         type="submit"
         style={{
@@ -145,6 +134,7 @@ function OldForm() {
           padding: "5px 20px",
           borderRadius: "10px",
         }}
+        disabled={!formik.isValid ||formik.isSubmitting}
       >
         Submit
       </button>
