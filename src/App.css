@@ -37,6 +37,10 @@ select {
   margin-bottom: 20px;
 }
 
+.form-control .error {
+  border-color: red;
+}
+
 .error {
   color: red;
 }
